@@ -14,7 +14,7 @@ envVars: {}
 
 service:
   name: labor-x-backend
-  type: NodePort
+  type: ClusterIP
   externalPort: 3000
   internalPort: 3000
 
