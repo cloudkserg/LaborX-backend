@@ -12,6 +12,6 @@
   "rabbit": {
     "url": "amqp://guest:guest@rabbitmq-rabbitmq-svc.default:5672",
     "reconnectTimeout" : 1000
-  },
+  }
 
 }
