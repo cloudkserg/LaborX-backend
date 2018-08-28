@@ -1,0 +1,17 @@
+{
+  "self": {
+    "url": "https://profile-stage.laborx.io"
+  },
+  "storage": {
+    "files": "/data/files",
+    "url": "mongodb://profile:profile@labor-x-mongo-mongodb.labor-x:27017/laborx-profile-backend"
+  },
+  "cloudinary": {
+    "url": "cloudinary://288179855984127:cF0Xy9KBZNNhP00PWoWcAbWB7_E@dne93b2bj"
+  },
+  "rabbit": {
+    "url": "amqp://guest:guest@rabbitmq-rabbitmq-svc.default:5672",
+    "reconnectTimeout" : 1000
+  },
+
+}

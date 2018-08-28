@@ -1,0 +1,147 @@
+image: docker:latest
+stages:
+  - build
+  - test
+  - release
+  - stage
+  - deploy
+
+variables:
+  REGISTRY: gcr.io/deep-wares-144610
+  CONTAINER_IMAGE_STAGE: ${REGISTRY}/chronobank/laborx-backend-stage:${CI_COMMIT_REF_NAME}_${CI_COMMIT_SHA}
+  CONTAINER_IMAGE_STAGE_LATEST: ${REGISTRY}/chronobank/laborx-backend-stage:latest
+  CONTAINER_IMAGE_PROD: ${REGISTRY}/chronobank/laborx-backend-prod:${CI_COMMIT_REF_NAME}_${CI_COMMIT_SHA}
+  CONTAINER_IMAGE_PROD_LATEST: ${REGISTRY}/chronobank/laborx-backend-prod:latest
+
+
+  #CONTAINER_IMAGE: ${REGISTRY}/chronobank/laborx-backend:${CI_COMMIT_TAG}
+
+  DOCKER_DRIVER: overlay2
+
+cache:
+  untracked: true
+  key: "$CI_BUILD_REF_NAME"
+  paths:
+    - node_modules/
+
+Build:
+  stage: build
+  image: keymetrics/pm2:latest-alpine
+
+  variables:
+    DOCKER_DRIVER: overlay2
+
+  script:
+    - apk update
+    - apk add bash git make gcc g++ python build-base
+    - yarn --no-lockfile
+    #- rm -f ./ecosystem.config.js
+    #- cp config/ecosystem.config.js ./ecosystem.config.js
+
+
+  artifacts:
+    paths:
+      - node_modules/
+    expire_in: "3 day"
+
+Test:
+  stage: test
+  image: keymetrics/pm2:latest-alpine
+
+  variables:
+    DOCKER_DRIVER: overlay2
+
+  script:
+    - npm run lint
+    #- npm run test:coverage
+  
+  artifacts:
+    paths:
+      - node_modules/
+    expire_in: "3 day"
+
+Release_STAGE:
+  stage: release
+  image: docker:latest
+  variables:
+    DOCKER_DRIVER: overlay2
+
+  script:
+    - docker login -u _json_key -p "$(cat /gcr-secret/key.json)" https://gcr.io
+    - docker build --build-arg CONF_TYPE_ARG="stage" -t ${CONTAINER_IMAGE_STAGE} .
+    - docker tag ${CONTAINER_IMAGE_STAGE} ${CONTAINER_IMAGE_STAGE_LATEST}
+    - docker push ${CONTAINER_IMAGE_STAGE}
+    - docker push ${CONTAINER_IMAGE_STAGE_LATEST}
+
+  only:
+    - develop
+  #only:
+    #- tags
+
+Release_PROD:
+  stage: release
+  image: docker:latest
+  variables:
+    DOCKER_DRIVER: overlay2
+
+  script:
+    - docker login -u _json_key -p "$(cat /gcr-secret/key.json)" https://gcr.io
+    - docker build --build-arg CONF_TYPE_ARG="production" -t ${CONTAINER_IMAGE_PROD} .
+    - docker tag ${CONTAINER_IMAGE_PROD} ${CONTAINER_IMAGE_PROD_LATEST}
+    - docker push ${CONTAINER_IMAGE_PROD}
+    - docker push ${CONTAINER_IMAGE_PROD_LATEST}
+
+  only:
+    - master
+  #only:
+    #- tags
+
+Deploy_to_STAGE:
+  stage: stage
+  image: artemkin/helm-gke:1.0
+  before_script:
+
+    - gcloud auth activate-service-account --key-file=/gke-secret/key.json
+    - gcloud container clusters get-credentials stage --zone us-central1-b --project deep-wares-144610
+    - helm init --client-only
+
+  script:
+    - helm lint ./charts/labor-x-backend-stage
+    - helm upgrade --install labor-x-backend-stage -f ./charts/labor-x-backend-stage/values.yaml ./charts/labor-x-backend-stage
+      --set=image.tag=${CI_COMMIT_REF_NAME}_${CI_COMMIT_SHA}
+      --timeout 900
+      --namespace=labor-x
+      --wait
+      --debug
+
+  only:
+    - develop
+    - master
+  #only:
+    #- tags
+
+
+Deploy_to_PROD:
+  stage: deploy
+  image: artemkin/helm-gke:1.0
+  before_script:
+
+    - gcloud auth activate-service-account --key-file=/gke-secret/key.json
+    - gcloud container clusters get-credentials production --zone us-central1-b --project deep-wares-144610
+    - helm init --client-only
+
+  script:
+    - helm lint ./charts/labor-x-backend-prod
+    - helm upgrade --install labor-x-backend-prod -f ./charts/labor-x-backend-prod/values.yaml ./charts/labor-x-backend-prod
+      --set=image.tag=${CI_COMMIT_REF_NAME}_${CI_COMMIT_SHA}
+      --timeout 900
+      --namespace=labor-x
+      --wait
+      --debug
+
+  only:
+    - production
+  #only:
+    #- tags
+
+#### End

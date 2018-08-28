@@ -1,0 +1,7 @@
+apiVersion: v1
+description: Helm chart for Labor-X-Backend-PROD
+name: labor-x-backend-prod
+version: 0.0.1
+maintainers:
+- name: Chronobank dev team
+  email: dev@mail.com
