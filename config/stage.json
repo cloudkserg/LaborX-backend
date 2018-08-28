@@ -12,6 +12,12 @@
   "rabbit": {
     "url": "amqp://guest:guest@rabbitmq-rabbitmq-svc.default:5672",
     "reconnectTimeout" : 1000
-  }
+  },
+  "sms": {
+    "accountSid": "AC0bd06e0c019ad5d24453787488d60d9b",
+    "authToken": "13d6cf6267b6a64122434913eeab359d",
+    "from": "+15403282741"
+  },
+
 
 }
