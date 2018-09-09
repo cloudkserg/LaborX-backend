@@ -30,37 +30,5 @@
         "pass": "/JX23YZovmgj"
       }
     }
-  },
-  "oauth": {
-    "timex-local-google": {
-      "strategy": "google",
-      "purpose": "exchange",
-      "scope": [
-        "https://www.googleapis.com/auth/plus.login"
-      ],
-      "routes": {
-        "successRedirect": "/server",
-        "failureRedirect": "/"
-      },
-      "options": {
-        "clientID": "42283045407-n6uk9mamg36cq1d807i2t33ibeap9uir.apps.googleusercontent.com",
-        "clientSecret": "BjRlaF3rkOCQiXSOlCe_OT0v",
-        "callbackURL": "https://exchange.local.ntr1x.com/oauth/timex-local-google/callback"
-      }
-    },
-    "timex-local-facebook": {
-      "strategy": "facebook",
-      "purpose": "exchange",
-      "scope": [],
-      "routes": {
-        "successRedirect": "/server",
-        "failureRedirect": "/"
-      },
-      "options": {
-        "clientID": "288197565344526",
-        "clientSecret": "6e1d4cc3f9f04736115831e8139bdc43",
-        "callbackURL": "https://exchange.local.ntr1x.com/oauth/timex-local-facebook/callback"
-      }
-    }
   }
 }
