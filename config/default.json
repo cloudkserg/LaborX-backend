@@ -9,6 +9,9 @@
   "cloudinary": {
     "url": "cloudinary://288179855984127:cF0Xy9KBZNNhP00PWoWcAbWB7_E@dne93b2bj"
   },
+  "frontend": {
+    "url": "https://exchange.local.ntr1x.com"
+  },
   "self": {
     "url": "https://exchange.local.ntr1x.com"
   },
