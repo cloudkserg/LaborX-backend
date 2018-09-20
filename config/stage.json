@@ -1,4 +1,7 @@
 {
+ "keystone": {
+    "cookieSecret": "Pm8tuZqwkVbh4eI0AoYQRRscGbTUR2t5JmAC0OZgW8qszGx4Uzg6ML1LuBWV"
+  },
   "self": {
     "url": "https://profile-stage.laborx.io"
   },
@@ -12,10 +15,61 @@
   "rabbit": {
     "url": "amqp://guest:nC865xfpbU41@rabbitmq-rabbitmq-svc.default:5672",
     "reconnectTimeout" : 1000
+    "enabled": true
+  },
+  "frontend": {
+    "url": "https://exchange.tp.ntr1x.com"
   },
   "sms": {
     "accountSid": "AC0bd06e0c019ad5d24453787488d60d9b",
     "authToken": "13d6cf6267b6a64122434913eeab359d",
     "from": "+15403282741"
+  },
+  "mail": {
+    "from": "noreply@ntr1x.com",
+    "baseURL": "https://exchange.tp.ntr1x.com",
+    "transport": {
+      "host": "smtp.mail.ru",
+      "port": 465,
+      "secure": true,
+      "debug": true,
+      "logger": true,
+      "auth": {
+        "user": "noreply@ntr1x.com",
+        "pass": "/JX23YZovmgj"
+      }
+    }
+  },
+  "oauth": {
+    "timex-tp-google": {
+      "strategy": "google",
+      "purpose": "exchange",
+      "scope": [
+        "https://www.googleapis.com/auth/plus.login"
+      ],
+      "routes": {
+        "successRedirect": "/server",
+        "failureRedirect": "/"
+      },
+      "options": {
+        "clientID": "42283045407-n6uk9mamg36cq1d807i2t33ibeap9uir.apps.googleusercontent.com",
+        "clientSecret": "BjRlaF3rkOCQiXSOlCe_OT0v",
+        "callbackURL": "https://exchange.tp.ntr1x.com/oauth/timex-tp-google/callback"
+      }
+    },
+    "timex-tp-facebook": {
+      "strategy": "facebook",
+      "purpose": "exchange",
+      "scope": [],
+      "routes": {
+        "successRedirect": "/server",
+        "failureRedirect": "/"
+      },
+      "options": {
+        "clientID": "288197565344526",
+        "clientSecret": "6e1d4cc3f9f04736115831e8139bdc43",
+        "callbackURL": "https://exchange.tp.ntr1x.com/oauth/timex-tp-facebook/callback"
+      }
+    }
   }
 }
