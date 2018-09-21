@@ -54,7 +54,7 @@
       "options": {
         "clientID": "42283045407-n6uk9mamg36cq1d807i2t33ibeap9uir.apps.googleusercontent.com",
         "clientSecret": "BjRlaF3rkOCQiXSOlCe_OT0v",
-        "callbackURL": "https://exchange.tp.ntr1x.com/oauth/timex-tp-google/callback"
+        "callbackURL": "https://profile-stage.laborx.io/oauth/timex-tp-google/callback"
       }
     },
     "timex-tp-facebook": {
@@ -68,7 +68,7 @@
       "options": {
         "clientID": "288197565344526",
         "clientSecret": "6e1d4cc3f9f04736115831e8139bdc43",
-        "callbackURL": "https://exchange.tp.ntr1x.com/oauth/timex-tp-facebook/callback"
+        "callbackURL": "https://profile-stage.laborx.io/oauth/timex-tp-facebook/callback"
       }
     }
   }
