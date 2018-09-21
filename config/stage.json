@@ -14,7 +14,7 @@
   },
   "rabbit": {
     "url": "amqp://guest:nC865xfpbU41@rabbitmq-rabbitmq-svc.default:5672",
-    "reconnectTimeout" : 1000
+    "reconnectTimeout" : 1000,
     "enabled": true
   },
   "frontend": {
