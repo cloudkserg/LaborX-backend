@@ -42,6 +42,15 @@ pm2 stop ecosystem.config.js
 ### API
 Postman collection not deployed yet
 
+for chronomint address
+bitcoin-address', label: 'Bitcoin Address' },
+bitcoin-gold-address', label: 'Bitcoin Gold Address' },
+bitcoin-cache-address', label: 'Bitcoin Cache Address' },
+bitcoin-litecoin-address', label: 'Litecoin Address' },
+waves-address', label: 'Waves Address' },
+nem-address', label: 'Nem Address' },
+ethereum-public-key', label: 'Ethereum Public Key' }
+
 
 ### TESTS
 For running test follow next step:
